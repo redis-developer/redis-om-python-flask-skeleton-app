@@ -63,7 +63,18 @@ def find_by_name(first_name, last_name):
 # Find people within a given age range.
 @app.route("/people/byage/<int:min_age>/<int:max_age>", methods=["GET"])
 def find_in_age_range(min_age, max_age):
-    return f"find_in_age_range {min_age}-{max_age}"
+    # TODO Error handling?
+    people = Person.find(
+        (Person.age >= min_age) &
+        (Person.age <= max_age)
+    ).all()
+
+    # TODO factor this out into its own function!
+    response = []
+    for person in people:
+        response.append(person.dict())
+
+    return { "results": response }
 
 # Find people whose personal statements contain a full text search match.
 @app.route("/people/bystatement/<text>", methods=["GET"])
