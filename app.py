@@ -1,3 +1,4 @@
+import json
 from xml.dom import NotFoundErr
 from flask import Flask, request
 from person import Person
@@ -47,7 +48,17 @@ def find_by_id(id):
 # Find people with a given first and last name.
 @app.route("/people/byname/<first_name>/<last_name>", methods=["GET"])
 def find_by_name(first_name, last_name):
-    return "find_by_name {first_name} {last_name}"
+    # TODO Error handling?
+    people = Person.find(
+        (Person.first_name == first_name) &
+        (Person.last_name == last_name)
+    ).all()
+
+    response = []
+    for person in people:
+        response.append(person.dict())
+
+    return { "results": response }
 
 # Find people within a given age range.
 @app.route("/people/byage/<int:min_age>/<int:max_age>", methods=["GET"])
