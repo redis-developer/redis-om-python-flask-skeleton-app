@@ -19,14 +19,19 @@ def create_person():
 # Update a person's age.
 @app.route("/person/<id>/age/<int:new_age>", methods=["POST"])
 def update_age(id, new_age):
-    return "update_age {id} to {new_age}"
+    # TODO Error handling...
+    person = Person.get(id)
+    person.age = new_age
+    person.save()
+    return "ok"
 
 # Delete a person by ID.
 @app.route("/person/<id>/delete", methods=["POST"])
 def delete_person(id):
+    # TODO Error handling...
     person = Person.get(id)
     person.delete()
-    return f"delete_person {id}"
+    return "ok"
 
 # Find a person by ID.
 @app.route("/person/byid/<id>", methods=["GET"])
