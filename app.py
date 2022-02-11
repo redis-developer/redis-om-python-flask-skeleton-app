@@ -78,8 +78,15 @@ def find_in_age_range(min_age, max_age):
 
 # Find people whose personal statements contain a full text search match.
 @app.route("/people/bystatement/<text>", methods=["GET"])
-def find_matching_statements():
-    return "find_matching_statements TODO"
+def find_matching_statements(text):
+    people = Person.find(Person.personal_statement % text).all()
+
+    # TODO factor this out into its own function!
+    response = []
+    for person in people:
+        response.append(person.dict())
+
+    return { "results": response }
 
 # Find people located within a given radius of a specified point.
 @app.route("/people/bylocation/lat/lng/radius/radius_unit", methods=["GET"])
