@@ -7,6 +7,15 @@ from redis_om.model import NotFoundError
 
 app = Flask(__name__)
 
+# Utility function to format list of People objects as 
+# a results dictionary.
+def build_results(people):
+    response = []
+    for person in people:
+        response.append(person.dict())
+
+    return { "results": response }
+
 # Create a new person.
 @app.route("/person/new", methods=["POST"])
 def create_person():
@@ -54,11 +63,7 @@ def find_by_name(first_name, last_name):
         (Person.last_name == last_name)
     ).all()
 
-    response = []
-    for person in people:
-        response.append(person.dict())
-
-    return { "results": response }
+    return build_results(people)
 
 # Find people within a given age range.
 @app.route("/people/byage/<int:min_age>/<int:max_age>", methods=["GET"])
@@ -69,24 +74,15 @@ def find_in_age_range(min_age, max_age):
         (Person.age <= max_age)
     ).all()
 
-    # TODO factor this out into its own function!
-    response = []
-    for person in people:
-        response.append(person.dict())
-
-    return { "results": response }
+    return build_results(people)
 
 # Find people whose personal statements contain a full text search match.
 @app.route("/people/bystatement/<text>", methods=["GET"])
 def find_matching_statements(text):
+    # TODO Error handling?
     people = Person.find(Person.personal_statement % text).all()
 
-    # TODO factor this out into its own function!
-    response = []
-    for person in people:
-        response.append(person.dict())
-
-    return { "results": response }
+    return build_results(people)
 
 # Find people located within a given radius of a specified point.
 @app.route("/people/bylocation/lat/lng/radius/radius_unit", methods=["GET"])
