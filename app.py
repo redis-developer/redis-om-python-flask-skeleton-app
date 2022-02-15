@@ -39,8 +39,7 @@ def update_age(id, new_age):
 @app.route("/person/<id>/delete", methods=["POST"])
 def delete_person(id):
     # TODO Error handling...
-    person = Person.get(id)
-    person.delete()
+    Person.delete(id)
     return "ok"
 
 # Find a person by ID.
