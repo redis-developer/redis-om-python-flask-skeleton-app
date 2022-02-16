@@ -19,7 +19,7 @@ We'll let Redis OM handle generation of unique IDs, which it does using [ULIDs](
 
 ## Getting Started
 
-TODO
+Let's go...
 
 ### Requirements
 
