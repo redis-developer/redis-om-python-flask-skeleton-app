@@ -76,7 +76,7 @@ $ flask run
 
 If all goes well, you should see output similar to this:
 
-```
+```bash
 $ flask run
  * Environment: development
  * Debug mode: on
