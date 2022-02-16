@@ -8,7 +8,8 @@ from redis_om.model import NotFoundError
 app = Flask(__name__)
 
 # Utility function to format list of People objects as 
-# a results dictionary.
+# a results dictionary, for easy conversion to JSON in 
+# API responses.
 def build_results(people):
     response = []
     for person in people:
@@ -38,7 +39,9 @@ def update_age(id, new_age):
 # Delete a person by ID.
 @app.route("/person/<id>/delete", methods=["POST"])
 def delete_person(id):
-    # TODO Error handling...
+    # Delete returns 1 if the person existed and was 
+    # deleted, or 0 if they didn't exist.  For our 
+    # purposes, both outcomes can be considered a success.
     Person.delete(id)
     return "ok"
 
@@ -75,11 +78,12 @@ def find_in_age_range(min_age, max_age):
 
     return build_results(people)
 
-# Find people whose personal statements contain a full text search match.
-@app.route("/people/bystatement/<text>", methods=["GET"])
-def find_matching_statements(text):
+# Find people whose personal statements contain a full text search match
+# for the supplied search term.
+@app.route("/people/bystatement/<search_term>", methods=["GET"])
+def find_matching_statements(search_term):
     # TODO Error handling?
-    people = Person.find(Person.personal_statement % text).all()
+    people = Person.find(Person.personal_statement % search_term).all()
 
     return build_results(people)
 
@@ -90,7 +94,18 @@ def find_by_radius():
 
 @app.route("/", methods=["GET"])
 def home_page():
-    return "<p>TODO Home Page...</p>"
+    return """
+        <!DOCTYPE html>
+        <html>
+            <head>
+                <title>Redis OM Python / Flask Basic CRUD Demo</title>
+            </head>
+            <body>
+                <h1>Redis OM Python / Flask Basic CRUD Demo</h1>
+                <p><a href="https://github.com/redis-developer/redis-om-python-flask-skeleton-app">Read the documentation on GitHub</a>.</p>
+            </body>
+        </html>
+    """
 
 # Create a RediSearch index for instances of the Person model.
 Migrator().run()
