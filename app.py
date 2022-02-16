@@ -1,6 +1,7 @@
 import json
 from xml.dom import NotFoundErr
 from flask import Flask, request
+from pydantic import ValidationError
 from person import Person
 from redis_om import Migrator
 from redis_om.model import NotFoundError
@@ -20,12 +21,15 @@ def build_results(people):
 # Create a new person.
 @app.route("/person/new", methods=["POST"])
 def create_person():
-    # TODO error handling
-    new_person = Person(**request.json)
-    print("Creating:")
-    print(new_person)
-    new_person.save()
-    return new_person.pk
+    try:
+        new_person = Person(**request.json)
+        print("Creating:")
+        print(new_person)
+        new_person.save()
+        return new_person.pk
+
+    except ValidationError:
+        return "Bad request.", 400
 
 # Update a person's age.
 @app.route("/person/<id>/age/<int:new_age>", methods=["POST"])
