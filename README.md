@@ -2,6 +2,8 @@
 
 A starter application for performing CRUD type operations with Redis OM Python ([GitHub](https://github.com/redis/redis-om-python), [Blog Post](https://redis.com/blog/introducing-redis-om-for-python/)) and the [Flask](https://flask.palletsprojects.com/) microframework.
 
+We'd love to see what you build with Redis, RediSearch and Redis OM.  [Join the Redis community on Discord](https://discord.gg/redis) to chat with us about all things Redis OM and Redis.
+
 ## Overview
 
 TODO
