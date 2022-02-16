@@ -123,9 +123,37 @@ then you'll need to check that you used the correct hostname, port, password and
 
 ## Create, Read, Update and Delete Data
 
+Let's create and manipulate some instances of our data model in Redis.  Here we'll look at how to call the Flask API with curl (you could also use Postman), how the code works, and how the data's stored in Redis.
+
+### Building a Person Model with Redis OM
+
 TODO
 
-## Code Walkthrough
+### Adding New People
+
+TODO
+
+### Find a Person by ID
+
+TODO
+
+### Find People with Matching First and Last Name
+
+TODO
+
+### Find People within a Given Age Range
+
+TODO
+
+### Find People using Full Text Search on their Personal Statements
+
+TODO
+
+## Update a Person's Age
+
+TODO
+
+### Delete a Person
 
 TODO
 
