@@ -6,7 +6,16 @@ We'd love to see what you build with Redis, RediSearch and Redis OM.  [Join the 
 
 ## Overview
 
-TODO
+This application demonstrates common data manipulation patterns using Redis OM, an API built with Flask and a simple domain model.
+
+Our entity is a Person, with the following attributes:
+
+* `first_name`: A string, their first or given name.
+* `last_name`: A string, their last or surname.
+* `age`: An integer, their age in years.
+* `personal_statement`: A string, A free text personal statement containing facts or other biographical information.
+
+We'll let Redis OM handle generation of unique IDs, which it does using [ULIDs](https://github.com/ulid/spec).  Redis OM will also handle creation of unique Redis key names for us.
 
 ## Getting Started
 
