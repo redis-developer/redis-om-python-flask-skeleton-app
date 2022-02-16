@@ -23,8 +23,6 @@ def build_results(people):
 def create_person():
     try:
         new_person = Person(**request.json)
-        print("Creating:")
-        print(new_person)
         new_person.save()
         return new_person.pk
 
@@ -58,16 +56,13 @@ def delete_person(id):
 def find_by_id(id):
     try:
         person = Person.get(id)
-        print(person)
         return person.dict()
     except NotFoundError:
-        print(f"{id} not found.")
         return {}
 
 # Find people with a given first and last name.
 @app.route("/people/byname/<first_name>/<last_name>", methods=["GET"])
 def find_by_name(first_name, last_name):
-    # TODO Error handling?
     people = Person.find(
         (Person.first_name == first_name) &
         (Person.last_name == last_name)
@@ -78,7 +73,6 @@ def find_by_name(first_name, last_name):
 # Find people within a given age range.
 @app.route("/people/byage/<int:min_age>/<int:max_age>", methods=["GET"])
 def find_in_age_range(min_age, max_age):
-    # TODO Error handling?
     people = Person.find(
         (Person.age >= min_age) &
         (Person.age <= max_age)
@@ -90,7 +84,6 @@ def find_in_age_range(min_age, max_age):
 # for the supplied search term.
 @app.route("/people/bystatement/<search_term>", methods=["GET"])
 def find_matching_statements(search_term):
-    # TODO Error handling?
     people = Person.find(Person.personal_statement % search_term).all()
 
     return build_results(people)
