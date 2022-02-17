@@ -176,7 +176,31 @@ The server responds with a JSON object containing the user's data:
 
 ### Find People with Matching First and Last Name
 
-TODO
+Let's find all the people who have a given first and last name...
+
+TODO code description.
+
+Try this out with curl as follows:
+
+```bash
+$ curl --location --request GET 'http://127.0.0.1:5000/people/byname/Test/User'
+```
+
+The server responds with an object containing `results`, an array of matches:
+
+```json
+{
+  "results": [
+    {
+      "age": 99,
+      "first_name": "Test",
+      "last_name": "User",
+      "personal_statement": "I like dogs, walking, cycling and reading books.",
+      "pk": "01FW40WMHDEWTA4GS301WN0Q69"
+    }
+  ]
+}
+```
 
 ### Find People within a Given Age Range
 
