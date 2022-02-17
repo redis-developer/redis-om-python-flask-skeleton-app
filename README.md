@@ -131,11 +131,48 @@ TODO
 
 ### Adding New People
 
-TODO
+TODO code description
+
+With the server running, add a new person using curl:
+
+```bash
+$ curl --location --request POST 'http://127.0.0.1:5000/person/new' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "first_name": "Test",
+    "last_name": "User",
+    "age": 99,
+    "personal_statement": "I like dogs, walking, cycling and reading books."
+}'
+```
+
+Running the above curl command will return the unique ULID ID assigned to the newly created person. For example `01FW40WMHDEWTA4GS301WN0Q69`.
+
+TODO add more people.
 
 ### Find a Person by ID
 
-TODO
+If we know a person's ID, we can retrieve their data.
+
+TODO code description
+
+Try this out with curl, substituting `01FW40WMHDEWTA4GS301WN0Q69` for the ID of a person that you created in your database:
+
+```bash
+$ curl --location --request GET 'http://localhost:5000/person/byid/01FW40WMHDEWTA4GS301WN0Q69'
+```
+
+The server responds with a JSON object containing the user's data:
+
+```json
+{
+  "age": 99,
+  "first_name": "Test",
+  "last_name": "User",
+  "personal_statement": "I like dogs, walking, cycling and reading books.",
+  "pk": "01FW40WMHDEWTA4GS301WN0Q69"
+}
+```
 
 ### Find People with Matching First and Last Name
 
