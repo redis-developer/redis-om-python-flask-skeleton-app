@@ -218,6 +218,14 @@ TODO
 
 TODO
 
+Let's delete the person with ID `01FW40WMHDEWTA4GS301WN0Q69`:
+
+```bash
+$ curl --location --request POST 'http://127.0.0.1:5000/person/01FW40WMHDEWTA4GS301WN0Q69/delete'
+```
+
+The server responds with an `ok` response regardless of whether the ID provided existed in Redis.
+
 ## Shutting Down Redis (Docker)
 
 If you're using Docker, and want to shut down the Redis container when you are finished with the application, use `docker-compose down`:
