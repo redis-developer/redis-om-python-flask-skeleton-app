@@ -82,9 +82,6 @@ def find_in_age_range(min_age, max_age):
 
     return build_results(people)
 
-# Find people in a given country.
-# TODO
-
 # Find people with a given skill in a given city.
 @app.route("/people/byskill/<desired_skill>/<city>", methods=["GET"])
 def find_matching_skill(desired_skill, city):
