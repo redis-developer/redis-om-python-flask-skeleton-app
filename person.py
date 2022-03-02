@@ -5,11 +5,12 @@ from typing import Optional, List
 class Address(EmbeddedJsonModel):
     street_number: PositiveInt = Field(index=True)
 
-    # Unit isn't in all addresses, so let's make it optional...
-    unit: Optional[str] = Field(index=True)
+    # Unit isn't in all addresses, so let's make it optional
+    # and not index it.
+    unit: Optional[str] = Field(index=False)
     street_name: str = Field(index=True)
     city: str = Field(index=True)
-    state: Optional[str] = Field(index=True)
+    state: str = Field(index=True)
     postal_code: str = Field(index=True)
 
     # Provide a default value if none supplied...
