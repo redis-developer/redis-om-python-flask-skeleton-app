@@ -1,11 +1,14 @@
 aioredis==2.0.1
 async-timeout==4.0.2
+certifi==2021.10.8
+charset-normalizer==2.0.12
 cleo==1.0.0a4
 click==8.0.4
 crashtest==0.3.1
 Deprecated==1.2.13
 Flask==2.0.3
 hiredis==2.0.0
+idna==3.3
 itsdangerous==2.1.0
 Jinja2==3.0.3
 MarkupSafe==2.1.0
@@ -18,9 +21,11 @@ python-dotenv==0.19.2
 python-ulid==1.0.3
 redis==4.1.4
 redis-om==0.0.20
+requests==2.27.1
 six==1.16.0
 types-redis==4.1.17
 types-six==1.16.11
 typing-extensions==4.1.1
+urllib3==1.26.8
 Werkzeug==2.0.3
 wrapt==1.13.3
