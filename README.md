@@ -154,16 +154,27 @@ With the server running, add a new person using curl:
 $ curl --location --request POST 'http://127.0.0.1:5000/person/new' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "first_name": "Test",
-    "last_name": "User",
-    "age": 99,
-    "personal_statement": "I like dogs, walking, cycling and reading books."
+    "first_name": "Joanne",
+    "last_name": "Peel",
+    "age": 36,
+    "personal_statement": "Music is my life, I love gigging and playing with my band.",
+    "address": {
+      "street_number": 56,
+      "street_name": "The Rushes",
+      "city": "Birmingham",
+      "state": "West Midlands",
+      "postal_code": "B91 6HG",
+      "country": "United Kingdom"
+    },
+    "skills": [
+      "synths",
+      "vocals",
+      "guitar"
+    ]
 }'
 ```
 
-Running the above curl command will return the unique ULID ID assigned to the newly created person. For example `01FW40WMHDEWTA4GS301WN0Q69`.
-
-TODO add more people.
+Running the above curl command will return the unique ULID ID assigned to the newly created person. For example `01FX8SSSDN7PT9T3N0JZZA758G`.
 
 ### Find a Person by ID
 
@@ -171,21 +182,36 @@ If we know a person's ID, we can retrieve their data.
 
 TODO code description
 
-Try this out with curl, substituting `01FW40WMHDEWTA4GS301WN0Q69` for the ID of a person that you created in your database:
+Try this out with curl, substituting `01FX8SSSDN7PT9T3N0JZZA758G` for the ID of a person that you just created in your database:
 
 ```bash
-$ curl --location --request GET 'http://localhost:5000/person/byid/01FW40WMHDEWTA4GS301WN0Q69'
+$ curl --location --request GET 'http://localhost:5000/person/byid/01FX8SSSDN7PT9T3N0JZZA758G'
 ```
 
 The server responds with a JSON object containing the user's data:
 
 ```json
 {
-  "age": 99,
-  "first_name": "Test",
-  "last_name": "User",
-  "personal_statement": "I like dogs, walking, cycling and reading books.",
-  "pk": "01FW40WMHDEWTA4GS301WN0Q69"
+  "address": {
+    "city": "Birmingham",
+    "country": "United Kingdom",
+    "pk": "01FX8SSSDNRDSRB3HMVH00NQTT",
+    "postal_code": "B91 6HG",
+    "state": "West Midlands",
+    "street_name": "The Rushes",
+    "street_number": 56,
+    "unit": null
+  },
+  "age": 36,
+  "first_name": "Joanne",
+  "last_name": "Peel",
+  "personal_statement": "Music is my life, I love gigging and playing with my band.",
+  "pk": "01FX8SSSDN7PT9T3N0JZZA758G",
+  "skills": [
+    "synths",
+    "vocals",
+    "guitar"
+  ]
 }
 ```
 
@@ -198,8 +224,10 @@ TODO code description.
 Try this out with curl as follows:
 
 ```bash
-$ curl --location --request GET 'http://127.0.0.1:5000/people/byname/Test/User'
+$ curl --location --request GET 'http://127.0.0.1:5000/people/byname/Kareem/Khan'
 ```
+
+**Note:** First and last name are case sensitive.
 
 The server responds with an object containing `results`, an array of matches:
 
@@ -207,11 +235,26 @@ The server responds with an object containing `results`, an array of matches:
 {
   "results": [
     {
-      "age": 99,
-      "first_name": "Test",
-      "last_name": "User",
-      "personal_statement": "I like dogs, walking, cycling and reading books.",
-      "pk": "01FW40WMHDEWTA4GS301WN0Q69"
+      "address": {
+        "city": "Sheffield",
+        "country": "United Kingdom",
+        "pk": "01FX8RMR7THMGA84RH8ZRQRRP9", 
+        "postal_code": "S1 5RE",
+        "state": "South Yorkshire",
+        "street_name": "The Beltway",
+        "street_number": 1,
+        "unit": "A"
+      },
+      "age": 27,
+      "first_name": "Kareem",
+      "last_name": "Khan",
+      "personal_statement":"I'm Kareem, a multi-instrumentalist and singer looking to join a new rock band.",
+      "pk":"01FX8RMR7T60ANQTS4P9NKPKX8",
+      "skills": [
+        "drums",
+        "guitar",
+        "synths"
+      ]
     }
   ]
 }
@@ -221,22 +264,279 @@ The server responds with an object containing `results`, an array of matches:
 
 TODO
 
+Let's find everyone between 30 and 47 years old, sorted by age:
+
+```bash
+$ curl --location --request GET 'http://127.0.0.1:5000/people/byage/30/47'
+
+```
+
+This returns a `results` object containing an array of matches:
+
+```json
+{
+  "results": [
+    {
+      "address": {
+        "city": "Sheffield",
+        "country": "United Kingdom",
+        "pk": "01FX8RMR7NW221STN6NVRDPEDT",
+        "postal_code": "S12 2MX",
+        "state": "South Yorkshire",
+        "street_name": "Main Street",
+        "street_number": 9,
+        "unit": null
+      },
+      "age": 35,
+      "first_name": "Robert",
+      "last_name": "McDonald",
+      "personal_statement": "My name is Robert, I love meeting new people and enjoy music, coding and walking my dog.",
+      "pk": "01FX8RMR7NRS45PBT3XP9KNAZH",
+      "skills": [
+        "guitar",
+        "piano",
+        "trombone"
+      ]
+    },
+    {
+      "address": {
+        "city": "Birmingham",
+        "country": "United Kingdom",
+        "pk": "01FX8SSSDNRDSRB3HMVH00NQTT",
+        "postal_code": "B91 6HG",
+        "state": "West Midlands",
+        "street_name": "The Rushes",
+        "street_number": 56,
+        "unit": null
+      },
+      "age": 36,
+      "first_name": "Joanne",
+      "last_name": "Peel",
+      "personal_statement": "Music is my life, I love gigging and playing with my band.",
+      "pk": "01FX8SSSDN7PT9T3N0JZZA758G",
+      "skills": [
+        "synths",
+        "vocals",
+        "guitar"
+      ]
+    },
+    {
+      "address": {
+        "city": "Nottingham",
+        "country": "United Kingdom",
+        "pk": "01FX8RMR82DDJ90CW8D1GM68YZ",
+        "postal_code": "NG1 1AA",
+        "state": "Nottinghamshire",
+        "street_name": "Broadway",
+        "street_number": 12,
+        "unit": "A-1"
+      },
+      "age": 37,
+      "first_name": "Noor",
+      "last_name": "Vasan",
+      "personal_statement": "I sing and play the guitar, I enjoy touring and meeting new people on the road.",
+      "pk": "01FX8RMR82D091TC37B45RCWY3",
+      "skills": [
+        "vocals",
+        "guitar"
+      ]
+    },
+    {
+      "address": {
+        "city": "San Diego",
+        "country": "United States",
+        "pk": "01FX8RMR7YCDAVSWBMWCH2B07G",
+        "postal_code": "92102",
+        "state": "California",
+        "street_name": "C Street",
+        "street_number": 1299,
+        "unit": null
+      },
+      "age": 43,
+      "first_name": "Fernando",
+      "last_name": "Ortega",
+      "personal_statement": "I'm in a really cool band that plays a lot of cover songs.  I'm the drummer!",
+      "pk": "01FX8RMR7YB283BPZ88HAG066P",
+      "skills": [
+        "clarinet",
+        "oboe",
+        "drums"
+      ]
+    }
+  ]
+}
+```
+
+### Find People in a Given City with a Specific Skill
+
+TODO
+
+Let's find all the guitar players in Sheffield:
+
+```bash
+$ curl --location --request GET 'http://127.0.0.1:5000/people/byskill/guitar/Sheffield'
+```
+
+**Note:** `Sheffield` is case sensitive.
+
+The server returns a `results` array containing matching people:
+
+```json
+{
+  "results": [
+    {
+      "address": {
+        "city": "Sheffield",
+        "country": "United Kingdom",
+        "pk": "01FX8RMR7THMGA84RH8ZRQRRP9",
+        "postal_code": "S1 5RE",
+        "state": "South Yorkshire",
+        "street_name": "The Beltway",
+        "street_number": 1,
+        "unit": "A"
+      },
+      "age": 28,
+      "first_name": "Kareem",
+      "last_name": "Khan",
+      "personal_statement": "I'm Kareem, a multi-instrumentalist and singer looking to join a new rock band.",
+      "pk": "01FX8RMR7T60ANQTS4P9NKPKX8",
+      "skills": [
+        "drums",
+        "guitar",
+        "synths"
+      ]
+    },
+    {
+      "address": {
+        "city": "Sheffield",
+        "country": "United Kingdom",
+        "pk": "01FX8RMR7NW221STN6NVRDPEDT",
+        "postal_code": "S12 2MX",
+        "state": "South Yorkshire",
+        "street_name": "Main Street",
+        "street_number": 9,
+        "unit": null
+      },
+      "age": 35,
+      "first_name": "Robert",
+      "last_name": "McDonald",
+      "personal_statement": "My name is Robert, I love meeting new people and enjoy music, coding and walking my dog.",
+      "pk": "01FX8RMR7NRS45PBT3XP9KNAZH",
+      "skills": [
+        "guitar",
+        "piano",
+        "trombone"
+      ]
+    }
+  ]
+}
+```
+
 ### Find People using Full Text Search on their Personal Statements
 
 TODO
+
+Let's find everyone who talks about "play" in their personal statement.
+
+```bash
+$ curl --location --request GET 'http://127.0.0.1:5000/people/bystatement/play'
+```
+
+The server responds with a `results` array of matching people:
+
+```json
+{
+  "results": [
+    { 
+      "address": {
+        "city": "San Diego",
+        "country": "United States",
+        "pk": "01FX8RMR7YCDAVSWBMWCH2B07G",
+        "postal_code": "92102",
+        "state": "California",
+        "street_name": "C Street",
+        "street_number": 1299,
+        "unit": null
+      },
+      "age": 43,
+      "first_name": "Fernando",
+      "last_name": "Ortega",
+      "personal_statement": "I'm in a really cool band that plays a lot of cover songs.  I'm the drummer!",
+      "pk": "01FX8RMR7YB283BPZ88HAG066P",
+      "skills": [
+        "clarinet",
+        "oboe",
+        "drums"
+      ]
+    }, {
+      "address": {
+        "city": "Nottingham",
+        "country": "United Kingdom",
+        "pk": "01FX8RMR82DDJ90CW8D1GM68YZ",
+        "postal_code": "NG1 1AA",
+        "state": "Nottinghamshire",
+        "street_name": "Broadway",
+        "street_number": 12,
+        "unit": "A-1"
+      },
+      "age": 37,
+      "first_name": "Noor",
+      "last_name": "Vasan",
+      "personal_statement": "I sing and play the guitar, I enjoy touring and meeting new people on the road.",
+      "pk": "01FX8RMR82D091TC37B45RCWY3",
+      "skills": [
+        "vocals",
+        "guitar"
+      ]
+    },
+    {
+      "address": {
+        "city": "Birmingham",
+        "country": "United Kingdom",
+        "pk": "01FX8SSSDNRDSRB3HMVH00NQTT",
+        "postal_code": "B91 6HG",
+        "state": "West Midlands",
+        "street_name": "The Rushes",
+        "street_number": 56,
+        "unit": null
+      },
+      "age": 36,
+      "first_name": "Joanne",
+      "last_name": "Peel",
+      "personal_statement": "Music is my life, I love gigging and playing with my band.",
+      "pk": "01FX8SSSDN7PT9T3N0JZZA758G",
+      "skills": [
+        "synths",
+        "vocals",
+        "guitar"
+      ]
+    }
+  ]
+}
+```
+
+Note that we get results including matches for "play", "plays" and "playing".
 
 ## Update a Person's Age
 
 TODO
 
+Let's change Kareem Khan's age from 27 to 28:
+
+```bash
+curl --location --request POST 'http://127.0.0.1:5000/person/01FX8RMR7T60ANQTS4P9NKPKX8/age/28'
+```
+
+The server responds with `ok`.
+
 ### Delete a Person
 
 TODO
 
-Let's delete the person with ID `01FW40WMHDEWTA4GS301WN0Q69`:
+Let's delete Dan Harris, the person with ID `01FX8RMR8545RWW4DYCE5MSZA1`:
 
 ```bash
-$ curl --location --request POST 'http://127.0.0.1:5000/person/01FW40WMHDEWTA4GS301WN0Q69/delete'
+$ curl --location --request POST 'http://127.0.0.1:5000/person/01FX8RMR8545RWW4DYCE5MSZA1/delete'
 ```
 
 The server responds with an `ok` response regardless of whether the ID provided existed in Redis.
