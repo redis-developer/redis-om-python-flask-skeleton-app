@@ -134,6 +134,8 @@ redis.exceptions.ConnectionError: Error 8 connecting to enterprise.redis.com:913
 
 then you'll need to check that you used the correct hostname, port, password and format when setting `REDIS_OM_URL`.
 
+If the data loader fails to post the sample data into the application, make sure that the Flask application is running **before** running the data loader.
+
 ## Create, Read, Update and Delete Data
 
 Let's create and manipulate some instances of our data model in Redis.  Here we'll look at how to call the Flask API with curl (you could also use Postman), how the code works, and how the data's stored in Redis.
