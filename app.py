@@ -72,13 +72,13 @@ def find_by_name(first_name, last_name):
 
     return build_results(people)
 
-# Find people within a given age range.
+# Find people within a given age range, and return them sorted by age.
 @app.route("/people/byage/<int:min_age>/<int:max_age>", methods=["GET"])
 def find_in_age_range(min_age, max_age):
     people = Person.find(
         (Person.age >= min_age) &
         (Person.age <= max_age)
-    ).all()
+    ).sort_by("age").all()
 
     return build_results(people)
 
