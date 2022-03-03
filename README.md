@@ -101,6 +101,19 @@ You're now up and running, and ready to perform CRUD operations on data with Red
 
 ![screenshot](server_running.png)
 
+### Load Sample Data
+
+We've provided a small amount of sample data (it's in `data/people.json`.  The Python script `dataloader.py` loads each person into Redis by posting the data to the application's create a new person endpoint.  Run it like this:
+
+```bash
+$ python dataloader.py
+Created person Robert McDonald with ID 01FX8RMR7NRS45PBT3XP9KNAZH
+Created person Kareem Khan with ID 01FX8RMR7T60ANQTS4P9NKPKX8
+Created person Fernando Ortega with ID 01FX8RMR7YB283BPZ88HAG066P
+Created person Noor Vasan with ID 01FX8RMR82D091TC37B45RCWY3
+Created person Dan Harris with ID 01FX8RMR8545RWW4DYCE5MSZA1
+```
+
 ### Problems?
 
 If the Flask server fails to start, take a look at its output.  If you see log entries similar to this:
