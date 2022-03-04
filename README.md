@@ -64,8 +64,7 @@ Next, we'll get a Redis Server up and running.  If you're using Docker:
 ```bash
 $ docker-compose up -d
 Creating network "redis-om-python-flask-skeleton-app_default" with the default driver
-Creating redis_om_python_flask_starter ... done
-$ 
+Creating redis_om_python_flask_starter ... done 
 ```
 
 If you're using Redis Enterprise Cloud, you'll need the hostname, port number, and password for your database.  Use these to set the `REDIS_OM_URL` environment variable like this:
@@ -161,7 +160,52 @@ Let's create and manipulate some instances of our data model in Redis.  Here we'
 
 ### Building a Person Model with Redis OM
 
-TODO
+Redis OM allows us to model entities using Python classes, and the [Pydantic](https://pypi.org/project/pydantic/) framework.  Our person model is contained in the file `person.py`.  Here's some notes about how it works:
+
+* We declare a class `Person` which extends a Redis OM class `JsonModel`.  This tells Redis OM that we want to store these entities in Redis as JSON documents.
+* We then declare each field in our model, specifying the data type and whether or not we want to index on that field.  For example, here's the `age` field, which we've declared as a positive integer that we want to index on:
+
+```python
+age: PositiveInt = Field(index=True)
+```
+
+* The `skills` field is a list of strings, declared thus:
+
+```python
+skills: List[str] = Field(index=True)
+```
+
+* For the `personal_statement` field, we don't want to index on the field's value, as it's a free text sentence rather than a single word or digit. For this, we'll tell Redis OM that we want to be able to perform full text searches on the values:
+
+```python
+personal_statement: str = Field(index=True, full_text_search=True)
+```
+
+* `address` works differently from the other fields.  Note that in our JSON representation of the model, address is an object rather than a string or numerical field.  With Redis OM, this is modeled as a second class, which extends the Redis OM `EmbeddedJsonModel` class:
+
+```python
+class Address(EmbeddedJsonModel):
+    # field definitions...
+```
+
+* Fields in an `EmbeddedJsonModel` are defined in the same way, so our class contains a field definition for each data item in the address.
+
+* Not every field in our JSON is present in every address, Redis OM allows us to declare a field as optional so long as we don't index it:
+
+```python
+unit: Optional[str] = Field(index=False)
+```
+
+* We can also set a default value for a field... let's say country should be "United Kingdom" unless otherwise specified:
+
+```python
+country: str = Field(index=True, default="United Kingdom")
+```
+* Finally, to add the embedded address object to our Person model, we declare a field of type `Address` in the Person class:
+
+```python
+address: Address
+```
 
 ### Adding New People
 
