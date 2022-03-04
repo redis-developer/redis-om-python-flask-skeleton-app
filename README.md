@@ -86,7 +86,7 @@ Note the `:` before the password.
 
 ### Create a Python Virtual Environment and Install the Dependencies
 
-Create a Python virtual environment, and install the project dependencies which are [Flask](https://pypi.org/project/Flask/) and [Redis OM](https://pypi.org/project/redis-om/):
+Create a Python virtual environment, and install the project dependencies which are [Flask](https://pypi.org/project/Flask/), [Requests](https://pypi.org/project/requests/) (used only in the data loader script) and [Redis OM](https://pypi.org/project/redis-om/):
 
 ```bash
 $ python3 -m venv venv
