@@ -114,7 +114,7 @@ $ flask run
  * Debugger PIN: XXX-XXX-XXX
 ```
 
-You're now up and running, and ready to perform CRUD operations on data with Redis, RediSearch and Redis OM for Python!  To make sure the server's running, point your browser at `http://127.0.0.1:5000/`, where you can expect to see the application's basic home page:
+You're now up and running, and ready to perform CRUD operations on data with Redis, RediSearch, RedisJSON and Redis OM for Python!  To make sure the server's running, point your browser at `http://127.0.0.1:5000/`, where you can expect to see the application's basic home page:
 
 ![screenshot](server_running.png)
 
