@@ -118,7 +118,7 @@ You're now up and running, and ready to perform CRUD operations on data with Red
 
 ![screenshot](server_running.png)
 
-### Load Sample Data
+### Load the Sample Data
 
 We've provided a small amount of sample data (it's in `data/people.json`.  The Python script `dataloader.py` loads each person into Redis by posting the data to the application's create a new person endpoint.  Run it like this:
 
@@ -130,6 +130,8 @@ Created person Fernando Ortega with ID 01FX8RMR7YB283BPZ88HAG066P
 Created person Noor Vasan with ID 01FX8RMR82D091TC37B45RCWY3
 Created person Dan Harris with ID 01FX8RMR8545RWW4DYCE5MSZA1
 ```
+
+Make sure to take a copy of the output of the data loader, as your IDs will differ from those used in the tutorial.  To follow along, substitute your IDs for the ones shown above.  e.g. whenever we are working with Kareem Khan, change 01FX8RMR7T60ANQTS4P9NKPKX8 for the ID that your data loader assiged to Kareem in your Redis database.
 
 ### Problems?
 
