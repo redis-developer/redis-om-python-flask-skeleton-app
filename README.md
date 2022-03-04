@@ -8,14 +8,31 @@ We'd love to see what you build with Redis, RediSearch and Redis OM.  [Join the 
 
 This application demonstrates common data manipulation patterns using Redis OM, an API built with Flask and a simple domain model.
 
-Our entity is a Person, with the following attributes:
+Our entity is a Person, with the following JSON representation:
 
-* `first_name`: A string, their first or given name.
-* `last_name`: A string, their last or surname.
-* `age`: An integer, their age in years.
-* `personal_statement`: A string, A free text personal statement containing facts or other biographical information.
+```json
+{
+  "first_name": "A string, the person's first or given name",
+  "last_name": "A string, the person's last or surname",
+  "age": 36,
+  "address": {
+    "street_number": 56,
+    "unit": "A string, optional unit number e.g. A or 1",
+    "street_name": "A string, name of the street they live on",
+    "city": "A string, name of the city they live in",
+    "state": "A string, state, province or county that they live in",
+    "postal_code": "A string, their zip or postal code",
+    "country": "A string, country that they live in."
+},
+  "personal_statement": "A string, free text personal statement",
+  "skills": [
+    "A string: a skill the person has",
+    "A string: another still that the person has"
+  ]
+}
+```
 
-We'll let Redis OM handle generation of unique IDs, which it does using [ULIDs](https://github.com/ulid/spec).  Redis OM will also handle creation of unique Redis key names for us.
+We'll let Redis OM handle generation of unique IDs, which it does using [ULIDs](https://github.com/ulid/spec).  Redis OM will also handle creation of unique Redis key names for us, as well as saving and retrieving entities from JSON documents stored in Redis.
 
 ## Getting Started
 
