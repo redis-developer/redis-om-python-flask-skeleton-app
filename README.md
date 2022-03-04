@@ -23,7 +23,7 @@ Our entity is a Person, with the following JSON representation:
     "state": "A string, state, province or county that they live in",
     "postal_code": "A string, their zip or postal code",
     "country": "A string, country that they live in."
-},
+  },
   "personal_statement": "A string, free text personal statement",
   "skills": [
     "A string: a skill the person has",
@@ -131,7 +131,7 @@ Created person Noor Vasan with ID 01FX8RMR82D091TC37B45RCWY3
 Created person Dan Harris with ID 01FX8RMR8545RWW4DYCE5MSZA1
 ```
 
-Make sure to take a copy of the output of the data loader, as your IDs will differ from those used in the tutorial.  To follow along, substitute your IDs for the ones shown above.  e.g. whenever we are working with Kareem Khan, change 01FX8RMR7T60ANQTS4P9NKPKX8 for the ID that your data loader assiged to Kareem in your Redis database.
+Make sure to take a copy of the output of the data loader, as your IDs will differ from those used in the tutorial.  To follow along, substitute your IDs for the ones shown above.  e.g. whenever we are working with Kareem Khan, change `01FX8RMR7T60ANQTS4P9NKPKX8` for the ID that your data loader assiged to Kareem in your Redis database.
 
 ### Problems?
 
