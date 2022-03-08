@@ -571,7 +571,13 @@ The server returns a `results` array containing matching people:
 
 ### Find People using Full Text Search on their Personal Statements
 
-TODO
+Each person has a `personal_statement` field, which is a free text string containing a couple of sentences about them.  We chose to index this in a way that makes it full text searchable, so let's see how to use this now.  The code for this is in the function `find_matching_statements` in `app.py`.
+
+To search for people who have the value of the parameter `search_term` in their `personal_statement` field, we use the `%` operator:
+
+```python
+  Person.find(Person.personal_statement % search_term).all()
+```
 
 Let's find everyone who talks about "play" in their personal statement.
 
