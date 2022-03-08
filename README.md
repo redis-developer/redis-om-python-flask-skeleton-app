@@ -662,7 +662,24 @@ Note that we get results including matches for "play", "plays" and "playing".
 
 ## Update a Person's Age
 
-TODO
+As well as retrieving information from Redis, we'll also want to update a Person's data from time to time.  Let's see how to do that with Redis OM for Python.
+
+The function `update_age` in `app.py` accepts two parameters: `id` and `new_age`.  Using these, we first retrieve the person's data from Redis and create a new object with it:
+
+```python
+  try:
+      person = Person.get(id)
+
+  except NotFoundError:
+      return "Bad request", 400
+```
+
+Assuming we find the person, let's update their age and save the data back to Redis:
+
+```python
+  person.age = new_age
+  person.save()
+```
 
 Let's change Kareem Khan's age from 27 to 28:
 
@@ -674,7 +691,11 @@ The server responds with `ok`.
 
 ### Delete a Person
 
-TODO
+If we know a person's ID, we can delete them from Redis without first having to load their data into a Person object. In the function `delete_person` in `app.py`, we call the `delete` class method on the Person class to do this:
+
+```python
+  Person.delete(id)
+```
 
 Let's delete Dan Harris, the person with ID `01FX8RMR8545RWW4DYCE5MSZA1`:
 
