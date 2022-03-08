@@ -274,9 +274,19 @@ For more information on the JSON Path syntax used to query JSON documents in Red
 
 ### Find a Person by ID
 
-If we know a person's ID, we can retrieve their data.
+If we know a person's ID, we can retrieve their data.  The function `find_by_id` in `app.py` receives an ID as its parameter, and asks Redis OM to retrieve and populate a Person object using the ID and the Person `.get` class method:
 
-TODO code description
+```python
+  try:
+      person = Person.get(id)
+      return person.dict()
+  except NotFoundError:
+      return {}
+```
+
+The `.dict()` method converts our Person object to a Python dictionary that Flask then returns to the caller.
+
+Note that if there is no Person with the supplied ID in Redis, `get` will throw a `NotFoundError`.
 
 Try this out with curl, substituting `01FX8SSSDN7PT9T3N0JZZA758G` for the ID of a person that you just created in your database:
 
