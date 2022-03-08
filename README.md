@@ -323,9 +323,18 @@ The server responds with a JSON object containing the user's data:
 
 ### Find People with Matching First and Last Name
 
-Let's find all the people who have a given first and last name...
+Let's find all the people who have a given first and last name...  This is handled by the function `find_by_name` in `app.py`.
 
-TODO code description.
+Here, we're using Person's `find` class method that's provided by Redis OM.  We pass it a search query, specifying that we want to find people whose `first_name` field contains the value of the `first_name` parameter passed to `find_by_name` AND whose `last_name` field contains the value of the `last_name` parameter:
+
+```python
+  people = Person.find(
+      (Person.first_name == first_name) &
+      (Person.last_name == last_name)
+  ).all()
+```
+
+`.all()` tells Redis OM that we want to retrieve all matching people.
 
 Try this out with curl as follows:
 
