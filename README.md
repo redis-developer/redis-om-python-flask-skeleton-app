@@ -495,7 +495,18 @@ This returns a `results` object containing an array of matches:
 
 ### Find People in a Given City with a Specific Skill
 
-TODO
+Now, we'll try a slightly different sort of query.  We want to find all of the people that live in a given city AND who also have a certain skill.  This requires a search over both the `city` field which is a string, and the `skills` field, which is an array of strings.
+
+Essentially we want to say "Find me all the people whose city is `city` AND whose skills array CONTAINS `desired_skill`", where `city` and `desired_skill` are the parameters to the `find_matching_skill` function in `app.py`.  Here's the code for that:
+
+```python
+  people = Person.find(
+      (Person.skills << desired_skill) &
+      (Person.address.city == city)
+  ).all()
+```
+
+The `<<` operator here is used to indicate "in" or "contains".
 
 Let's find all the guitar players in Sheffield:
 
