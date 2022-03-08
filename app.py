@@ -22,11 +22,13 @@ def build_results(people):
 @app.route("/person/new", methods=["POST"])
 def create_person():
     try:
+        print(request.json)
         new_person = Person(**request.json)
         new_person.save()
         return new_person.pk
 
-    except ValidationError:
+    except ValidationError as e:
+        print(e)
         return "Bad request.", 400
 
 # Update a person's age.
@@ -70,12 +72,22 @@ def find_by_name(first_name, last_name):
 
     return build_results(people)
 
-# Find people within a given age range.
+# Find people within a given age range, and return them sorted by age.
 @app.route("/people/byage/<int:min_age>/<int:max_age>", methods=["GET"])
 def find_in_age_range(min_age, max_age):
     people = Person.find(
         (Person.age >= min_age) &
         (Person.age <= max_age)
+    ).sort_by("age").all()
+
+    return build_results(people)
+
+# Find people with a given skill in a given city.
+@app.route("/people/byskill/<desired_skill>/<city>", methods=["GET"])
+def find_matching_skill(desired_skill, city):
+    people = Person.find(
+        (Person.skills << desired_skill) &
+        (Person.address.city == city)
     ).all()
 
     return build_results(people)
@@ -87,11 +99,6 @@ def find_matching_statements(search_term):
     people = Person.find(Person.personal_statement % search_term).all()
 
     return build_results(people)
-
-# Find people located within a given radius of a specified point.
-@app.route("/people/bylocation/lat/lng/radius/radius_unit", methods=["GET"])
-def find_by_radius():
-    return "find_by_radius TODO not yet supported..."
 
 @app.route("/", methods=["GET"])
 def home_page():

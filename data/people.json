@@ -1,0 +1,98 @@
+[
+  {
+    "first_name": "Robert",
+    "last_name": "McDonald",
+    "age": 35,
+    "address": {
+      "street_number": 9,
+      "street_name": "Main Street",
+      "city": "Sheffield",
+      "state": "South Yorkshire",
+      "postal_code": "S12 2MX",
+      "country": "United Kingdom"
+    },
+    "skills": [
+      "guitar",
+      "piano",
+      "trombone"
+    ],
+    "personal_statement": "My name is Robert, I love meeting new people and enjoy music, coding and walking my dog."
+  },
+  {
+    "first_name": "Kareem",
+    "last_name": "Khan",
+    "age": 27,
+    "address": {
+      "street_number": 1,
+      "unit": "A",
+      "street_name": "The Beltway",
+      "city": "Sheffield",
+      "state": "South Yorkshire",
+      "postal_code": "S1 5RE",
+      "country": "United Kingdom"
+    },
+    "skills": [
+      "drums",
+      "guitar",
+      "synths"
+    ],
+    "personal_statement": "I'm Kareem, a multi-instrumentalist and singer looking to join a new rock band."
+  },
+  {
+    "first_name": "Fernando",
+    "last_name": "Ortega",
+    "age": 43,
+    "address": {
+      "street_number": 1299,
+      "street_name": "C Street",
+      "city": "San Diego",
+      "state": "California",
+      "postal_code": "92102",
+      "country": "United States"
+    },
+    "skills": [
+      "clarinet",
+      "oboe",
+      "drums"
+    ],
+    "personal_statement": "I'm in a really cool band that plays a lot of cover songs.  I'm the drummer!"
+  },
+  {
+    "first_name": "Noor",
+    "last_name": "Vasan",
+    "age": 37,
+    "address": {
+      "street_number": 12,
+      "unit": "A-1",
+      "street_name": "Broadway",
+      "city": "Nottingham",
+      "state": "Nottinghamshire",
+      "postal_code": "NG1 1AA",
+      "country": "United Kingdom"
+    },
+    "skills": [
+      "vocals",
+      "guitar"
+    ],
+    "personal_statement": "I sing and play the guitar, I enjoy touring and meeting new people on the road."
+  },
+  {
+    "first_name": "Dan",
+    "last_name": "Harris",
+    "age": 21,
+    "address": {
+      "street_number": 333,
+      "street_name": "Washington Avenue",
+      "city": "New York",
+      "state": "New York",
+      "postal_code": "10009",
+      "country": "United States"
+    },
+    "skills": [
+      "harmonica",
+      "vocals",
+      "trumpet"
+    ],
+    "personal_statement": "Dan here - I'm a singer and trumpet player based in New York city, always excited to play with a band."
+  }
+]
