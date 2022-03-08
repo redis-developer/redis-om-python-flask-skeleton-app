@@ -377,7 +377,18 @@ The server responds with an object containing `results`, an array of matches:
 
 ### Find People within a Given Age Range
 
-TODO
+It's useful to be able to find people that fall into a given age range... the function `find_in_age_range` in `app.py` handles this as follows...
+
+We'll again use Person's `find` class method, this time passing it a minimum and maximum age, specifying that we want results where the `age` field is between those values only:
+
+```python
+  people = Person.find(
+      (Person.age >= min_age) &
+      (Person.age <= max_age)
+  ).sort_by("age").all()
+```
+
+Note that we can also use `.sort_by` to specify which field we want our results sorted by.
 
 Let's find everyone between 30 and 47 years old, sorted by age:
 
