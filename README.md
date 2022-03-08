@@ -100,6 +100,7 @@ Let's start the Flask application in development mode, so that Flask will restar
 ```bash
 $ export FLASK_ENV=development
 $ flask run
+```
 
 If all goes well, you should see output similar to this:
 
