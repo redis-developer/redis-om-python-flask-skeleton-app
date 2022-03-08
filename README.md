@@ -210,9 +210,19 @@ address: Address
 
 ### Adding New People
 
-TODO code description
+The function `create_person` in `app.py` handles the creation of a new person in Redis.  It expects a JSON object that adheres to our Person model's schema.  The code to then create a new Person object with that data and save it in Redis is simple:
 
-With the server running, add a new person using curl:
+```python
+  new_person = Person(**request.json)
+  new_person.save()
+  return new_person.pk
+```
+
+When a new Person instance is created, Redis OM assigns it a unique ULID primary key, which we can access as `.pk`.  We return that to the caller, so that they know the ID of the object they just created.
+
+Persisting the object to Redis is then simply a matter of calling `.save()` on it.
+
+Try it out... with the server running, add a new person using curl:
 
 ```bash
 $ curl --location --request POST 'http://127.0.0.1:5000/person/new' \
@@ -239,6 +249,28 @@ $ curl --location --request POST 'http://127.0.0.1:5000/person/new' \
 ```
 
 Running the above curl command will return the unique ULID ID assigned to the newly created person. For example `01FX8SSSDN7PT9T3N0JZZA758G`.
+
+### Examining the data in Redis
+
+Let's take a look at what we just saved in Redis.  Using RedisInsight or redis-cli, connect to the database and look at the value stored at key `:person.Person:01FX8SSSDN7PT9T3N0JZZA758G`.  This is stored as a JSON document in Redis, so if using redis-cli you'll need the following command:
+
+```bash
+$ redis-cli
+127.0.0.1:6379> json.get :person.Person:01FX8SSSDN7PT9T3N0JZZA758G
+```
+
+If you're using RedisInsight, the browser will render the key value for you when you click on the key name:
+
+TODO SCREENSHOT SHOWING JOANNE PEEL WITH CORRECT ID
+
+When storing data as JSON in Redis, we can update and retrieve the whole document, or just parts of it.  For example, to retrieve only the person's address and first skill, use the following command (RedisInsight users should use the built in redis-cli for this):
+
+```bash
+$ redis-cli
+127.0.0.1:6379> json.get :person.Person:01FX8SSSDN7PT9T3N0JZZA758G $.address $.skills[0]
+```
+
+For more information on the JSON Path syntax used to query JSON documents in Redis, see the [RedisJSON documentation](https://oss.redis.com/redisjson/path/).
 
 ### Find a Person by ID
 
