@@ -262,7 +262,7 @@ $ redis-cli
 
 If you're using RedisInsight, the browser will render the key value for you when you click on the key name:
 
-TODO SCREENSHOT SHOWING JOANNE PEEL WITH CORRECT ID
+![Data in RedisInsight](screenshots/insight_explore_person.png)
 
 When storing data as JSON in Redis, we can update and retrieve the whole document, or just parts of it.  For example, to retrieve only the person's address and first skill, use the following command (RedisInsight users should use the built in redis-cli for this):
 
