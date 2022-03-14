@@ -662,7 +662,7 @@ The server responds with a `results` array of matching people:
 
 Note that we get results including matches for "play", "plays" and "playing".
 
-## Update a Person's Age
+### Update a Person's Age
 
 As well as retrieving information from Redis, we'll also want to update a Person's data from time to time.  Let's see how to do that with Redis OM for Python.
 
@@ -706,6 +706,34 @@ $ curl --location --request POST 'http://127.0.0.1:5000/person/01FX8RMR8545RWW4D
 ```
 
 The server responds with an `ok` response regardless of whether the ID provided existed in Redis.
+
+### Setting an Expiry Time for a Person
+
+This is an example of how to run arbitrary Redis commands against instances of a model saved in Redis.  Let's see how we can set the time to live (TTL) on a person, so that Redis will expire the JSON document after a configurable number of seconds have passed.
+
+The function `expire_by_id` in `app.py` handles this as follows.  It takes two parameters: `id` - the ID of a person to expire, and `seconds` - the number of seconds in the future to expire the person after.  This requires us to run the Redis `EXPIRE` command against the person's key.  To do this, we need to access the Redis connection from the `Person` model like so:
+
+```python
+  person_to_expire = Person.get(id)
+  Person.db().expire(person_to_expire.key(), seconds)
+```
+
+Let's set the person with ID `01FX8RMR82D091TC37B45RCWY3` to expire in 600 seconds:
+
+```bash
+$ curl --location --request POST 'http://localhost:5000/person/01FX8RMR82D091TC37B45RCWY3/expire/600'
+```
+
+Using `redis-cli`, you can check that the person now has a TTL set with the Redis `expire` command:
+
+```
+127.0.0.1:6379> ttl :person.Person:01FX8RMR82D091TC37B45RCWY3
+(integer) 584
+```
+
+This shows that Redis will expire the key 584 seconds from now.
+
+You can use the `.db()` function on your model class to get at the underlying redis-py connection whenever you want to run lower level Redis commands.  For more details, see the [redis-py documentation](https://redis-py.readthedocs.io/en/stable/).
 
 ## Shutting Down Redis (Docker)
 

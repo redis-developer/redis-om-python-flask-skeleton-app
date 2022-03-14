@@ -100,6 +100,19 @@ def find_matching_statements(search_term):
 
     return build_results(people)
 
+# Expire a person's record after a given number of seconds.
+@app.route("/person/<id>/expire/<int:seconds>", methods=["POST"])
+def expire_by_id(id, seconds):
+    # Get the full Redis key for the supplied ID.
+    try:
+        person_to_expire = Person.get(id)
+        Person.db().expire(person_to_expire.key(), seconds)
+    except NotFoundError:
+        pass
+
+    # Return OK whatever happens.
+    return "ok"
+
 @app.route("/", methods=["GET"])
 def home_page():
     return """
