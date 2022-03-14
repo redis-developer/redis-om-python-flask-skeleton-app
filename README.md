@@ -234,6 +234,7 @@ $ curl --location --request POST 'http://127.0.0.1:5000/person/new' \
     "personal_statement": "Music is my life, I love gigging and playing with my band.",
     "address": {
       "street_number": 56,
+      "unit": "4A",
       "street_name": "The Rushes",
       "city": "Birmingham",
       "state": "West Midlands",
@@ -268,6 +269,7 @@ When storing data as JSON in Redis, we can update and retrieve the whole documen
 ```bash
 $ redis-cli
 127.0.0.1:6379> json.get :person.Person:01FX8SSSDN7PT9T3N0JZZA758G $.address $.skills[0]
+"{\"$.skills[0]\":[\"synths\"],\"$.address\":[{\"pk\":\"01FX8SSSDNRDSRB3HMVH00NQTT\",\"street_number\":56,\"unit\":\"4A\",\"street_name\":\"The Rushes\",\"city\":\"Birmingham\",\"state\":\"West Midlands\",\"postal_code\":\"B91 6HG\",\"country\":\"United Kingdom\"}]}"
 ```
 
 For more information on the JSON Path syntax used to query JSON documents in Redis, see the [RedisJSON documentation](https://oss.redis.com/redisjson/path/).
