@@ -225,7 +225,7 @@ Persisting the object to Redis is then simply a matter of calling `.save()` on i
 Try it out... with the server running, add a new person using curl:
 
 ```bash
-$ curl --location --request POST 'http://127.0.0.1:5000/person/new' \
+curl --location --request POST 'http://127.0.0.1:5000/person/new' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "first_name": "Joanne",
@@ -293,7 +293,7 @@ Note that if there is no Person with the supplied ID in Redis, `get` will throw 
 Try this out with curl, substituting `01FX8SSSDN7PT9T3N0JZZA758G` for the ID of a person that you just created in your database:
 
 ```bash
-$ curl --location --request GET 'http://localhost:5000/person/byid/01FX8SSSDN7PT9T3N0JZZA758G'
+curl --location --request GET 'http://localhost:5000/person/byid/01FX8SSSDN7PT9T3N0JZZA758G'
 ```
 
 The server responds with a JSON object containing the user's data:
@@ -341,7 +341,7 @@ Here, we're using Person's `find` class method that's provided by Redis OM.  We 
 Try this out with curl as follows:
 
 ```bash
-$ curl --location --request GET 'http://127.0.0.1:5000/people/byname/Kareem/Khan'
+curl --location --request GET 'http://127.0.0.1:5000/people/byname/Kareem/Khan'
 ```
 
 **Note:** First and last name are case sensitive.
@@ -395,8 +395,7 @@ Note that we can also use `.sort_by` to specify which field we want our results 
 Let's find everyone between 30 and 47 years old, sorted by age:
 
 ```bash
-$ curl --location --request GET 'http://127.0.0.1:5000/people/byage/30/47'
-
+curl --location --request GET 'http://127.0.0.1:5000/people/byage/30/47'
 ```
 
 This returns a `results` object containing an array of matches:
@@ -513,7 +512,7 @@ The `<<` operator here is used to indicate "in" or "contains".
 Let's find all the guitar players in Sheffield:
 
 ```bash
-$ curl --location --request GET 'http://127.0.0.1:5000/people/byskill/guitar/Sheffield'
+curl --location --request GET 'http://127.0.0.1:5000/people/byskill/guitar/Sheffield'
 ```
 
 **Note:** `Sheffield` is case sensitive.
@@ -584,7 +583,7 @@ To search for people who have the value of the parameter `search_term` in their 
 Let's find everyone who talks about "play" in their personal statement.
 
 ```bash
-$ curl --location --request GET 'http://127.0.0.1:5000/people/bystatement/play'
+curl --location --request GET 'http://127.0.0.1:5000/people/bystatement/play'
 ```
 
 The server responds with a `results` array of matching people:
@@ -702,7 +701,7 @@ If we know a person's ID, we can delete them from Redis without first having to 
 Let's delete Dan Harris, the person with ID `01FX8RMR8545RWW4DYCE5MSZA1`:
 
 ```bash
-$ curl --location --request POST 'http://127.0.0.1:5000/person/01FX8RMR8545RWW4DYCE5MSZA1/delete'
+curl --location --request POST 'http://127.0.0.1:5000/person/01FX8RMR8545RWW4DYCE5MSZA1/delete'
 ```
 
 The server responds with an `ok` response regardless of whether the ID provided existed in Redis.
@@ -721,7 +720,7 @@ The function `expire_by_id` in `app.py` handles this as follows.  It takes two p
 Let's set the person with ID `01FX8RMR82D091TC37B45RCWY3` to expire in 600 seconds:
 
 ```bash
-$ curl --location --request POST 'http://localhost:5000/person/01FX8RMR82D091TC37B45RCWY3/expire/600'
+curl --location --request POST 'http://localhost:5000/person/01FX8RMR82D091TC37B45RCWY3/expire/600'
 ```
 
 Using `redis-cli`, you can check that the person now has a TTL set with the Redis `expire` command:
