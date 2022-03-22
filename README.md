@@ -723,7 +723,7 @@ curl --location --request POST 'http://localhost:5000/person/01FX8RMR82D091TC37B
 
 Using `redis-cli`, you can check that the person now has a TTL set with the Redis `expire` command:
 
-```
+```bash
 127.0.0.1:6379> ttl :person.Person:01FX8RMR82D091TC37B45RCWY3
 (integer) 584
 ```
