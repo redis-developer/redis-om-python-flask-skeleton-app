@@ -2,9 +2,10 @@ version: "3.9"
 services:
   redis:
     container_name: redis_om_python_flask_starter
-    image: "redislabs/redisearch:edge"
+    image: "redis/redis-stack:edge"
     ports:
       - 6379:6379
+      - 8001:8001
     deploy:
       replicas: 1
       restart_policy:

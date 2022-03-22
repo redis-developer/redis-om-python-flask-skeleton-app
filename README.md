@@ -1,8 +1,8 @@
 # Redis OM Python Flask Starter Application
 
-A starter application for performing CRUD type operations with Redis OM Python ([GitHub](https://github.com/redis/redis-om-python), [Blog Post](https://redis.com/blog/introducing-redis-om-for-python/)) and the [Flask](https://flask.palletsprojects.com/) microframework.
+A starter application for performing CRUD type operations with Redis OM Python ([GitHub](https://github.com/redis/redis-om-python), [Blog Post](https://redis.com/blog/introducing-redis-om-for-python/)), Redis Stack and the [Flask](https://flask.palletsprojects.com/) microframework.
 
-We'd love to see what you build with Redis, RediSearch and Redis OM.  [Join the Redis community on Discord](https://discord.gg/redis) to chat with us about all things Redis OM and Redis.
+We'd love to see what you build with Redis Stack and Redis OM.  [Join the Redis community on Discord](https://discord.gg/redis) to chat with us about all things Redis OM and Redis Stack.
 
 ## Overview
 
@@ -32,7 +32,7 @@ Our entity is a Person, with the following JSON representation:
 }
 ```
 
-We'll let Redis OM handle generation of unique IDs, which it does using [ULIDs](https://github.com/ulid/spec).  Redis OM will also handle creation of unique Redis key names for us, as well as saving and retrieving entities from JSON documents stored in Redis.
+We'll let Redis OM handle generation of unique IDs, which it does using [ULIDs](https://github.com/ulid/spec).  Redis OM will also handle creation of unique Redis key names for us, as well as saving and retrieving entities from JSON documents stored in a Redis Stack database.
 
 ## Getting Started
 
@@ -44,9 +44,9 @@ To run this application you'll need:
 
 * [git](https://git-scm.com/download) - to clone the repo to your machine. 
 * [Python 3.9 or higher](https://www.python.org/downloads/).
-* A [Redis](https://redis.io) database with the [RediSearch](https://redisearch.io) and [RedisJSON](https://redisjson.io) modules installed.  We've provided a `docker-compose.yml` for this.  You can also [sign up for a free 30Mb database with Redis Enterprise Cloud](https://redis.com/try-free/) - be sure to check the box to install RediSearch and RedisJSON when creating your cloud database, follow [this guide](https://developer.redis.com/create/rediscloud/).
+* A [Redis Stack](https://redis.io) database, or Redis with the [RediSearch](https://redisearch.io) and [RedisJSON](https://redisjson.io) modules installed.  We've provided a `docker-compose.yml` for this.  You can also [sign up for a free 30Mb database with Redis Enterprise Cloud](https://redis.com/try-free/) - be sure to check the Redis Stack option when creating your cloud database.
 * [curl](https://curl.se/), or [Postman](https://www.postman.com/) - to send HTTP requests to the application.  We'll provide examples using curl in this document.
-* Optional: [RedisInsight](https://redis.com/redis-enterprise/redis-insight/), a free data visualization and database management tool for Redis.  When downloading RedisInsight, be sure to select version 2.x.
+* Optional: [RedisInsight](https://redis.com/redis-enterprise/redis-insight/), a free data visualization and database management tool for Redis.  When downloading RedisInsight, be sure to select version 2.x or use the version that comes with Redis Stack.
 
 ### Get the Source Code
 
@@ -57,9 +57,9 @@ $ git clone https://github.com/redis-developer/redis-om-python-flask-skeleton-ap
 $ cd redis-om-python-flask-skeleton-app
 ```
 
-### Start a Redis Server, or Configure your Redis Enterprise Cloud Credentials
+### Start a Redis Stack Database, or Configure your Redis Enterprise Cloud Credentials
 
-Next, we'll get a Redis Server up and running.  If you're using Docker:
+Next, we'll get a Redis Stack database up and running.  If you're using Docker:
 
 ```bash
 $ docker-compose up -d
@@ -70,7 +70,7 @@ Creating redis_om_python_flask_starter ... done
 If you're using Redis Enterprise Cloud, you'll need the hostname, port number, and password for your database.  Use these to set the `REDIS_OM_URL` environment variable like this:
 
 ```bash
-$ export REDIS_OM_URL=redis://:<password>@<host>:<port>
+$ export REDIS_OM_URL=redis://default:<password>@<host>:<port>
 ```
 
 (This step is not required when working with Docker as the Docker container runs Redis on `localhost` port `6379` with no password, which is the default connection that Redis OM uses.)
@@ -78,10 +78,8 @@ $ export REDIS_OM_URL=redis://:<password>@<host>:<port>
 For example if your Redis Enterprise Cloud database is at port `9139` on host `enterprise.redis.com` and your password is `5uper53cret` then you'd set `REDIS_OM_URL` as follows:
 
 ```bash
-$ export REDIS_OM_URL=redis://:5uper53cret@enterprise.redis.com:9139
+$ export REDIS_OM_URL=redis://default:5uper53cret@enterprise.redis.com:9139
 ```
-
-Note the `:` before the password.
 
 ### Create a Python Virtual Environment and Install the Dependencies
 
