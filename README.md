@@ -4,6 +4,8 @@ A starter application for performing CRUD type operations with Redis OM Python (
 
 We'd love to see what you build with Redis Stack and Redis OM.  [Join the Redis community on Discord](https://discord.gg/redis) to chat with us about all things Redis OM and Redis Stack.
 
+[Watch the workshop video](https://www.youtube.com/watch?v=PPT1FElAS84) that accompanies this application on YouTube.
+
 ## Overview
 
 This application demonstrates common data manipulation patterns using Redis OM, an API built with Flask and a simple domain model.
