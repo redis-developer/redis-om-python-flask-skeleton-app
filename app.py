@@ -32,13 +32,13 @@ def create_person():
         return "Bad request.", 400
 
 # Update a person's age.
-@app.route("/person/<id>/age/<int:new_age>", methods=["POST"])
+@app.route("/person/<id>/age/<int:new_age>", methods=["PUT"])
 def update_age(id, new_age):
     try:
         person = Person.get(id)
 
     except NotFoundError:
-        return "Bad request", 400
+        return "User not found", 404
     
     person.age = new_age
     person.save()
