@@ -213,9 +213,9 @@ address: Address
 The function `create_person` in `app.py` handles the creation of a new person in Redis.  It expects a JSON object that adheres to our Person model's schema.  The code to then create a new Person object with that data and save it in Redis is simple:
 
 ```python
-  new_person = Person(**request.json)
-  new_person.save()
-  return new_person.pk
+new_person = Person(**request.json)
+new_person.save()
+return new_person.pk
 ```
 
 When a new Person instance is created, Redis OM assigns it a unique ULID primary key, which we can access as `.pk`.  We return that to the caller, so that they know the ID of the object they just created.
@@ -279,11 +279,11 @@ For more information on the JSON Path syntax used to query JSON documents in Red
 If we know a person's ID, we can retrieve their data.  The function `find_by_id` in `app.py` receives an ID as its parameter, and asks Redis OM to retrieve and populate a Person object using the ID and the Person `.get` class method:
 
 ```python
-  try:
-      person = Person.get(id)
-      return person.dict()
-  except NotFoundError:
-      return {}
+try:
+    person = Person.get(id)
+    return person.dict()
+except NotFoundError:
+    return {}
 ```
 
 The `.dict()` method converts our Person object to a Python dictionary that Flask then returns to the caller.
@@ -330,10 +330,10 @@ Let's find all the people who have a given first and last name...  This is handl
 Here, we're using Person's `find` class method that's provided by Redis OM.  We pass it a search query, specifying that we want to find people whose `first_name` field contains the value of the `first_name` parameter passed to `find_by_name` AND whose `last_name` field contains the value of the `last_name` parameter:
 
 ```python
-  people = Person.find(
-      (Person.first_name == first_name) &
-      (Person.last_name == last_name)
-  ).all()
+people = Person.find(
+    (Person.first_name == first_name) &
+    (Person.last_name == last_name)
+).all()
 ```
 
 `.all()` tells Redis OM that we want to retrieve all matching people.
@@ -384,10 +384,10 @@ It's useful to be able to find people that fall into a given age range... the fu
 We'll again use Person's `find` class method, this time passing it a minimum and maximum age, specifying that we want results where the `age` field is between those values only:
 
 ```python
-  people = Person.find(
-      (Person.age >= min_age) &
-      (Person.age <= max_age)
-  ).sort_by("age").all()
+people = Person.find(
+    (Person.age >= min_age) &
+    (Person.age <= max_age)
+).sort_by("age").all()
 ```
 
 Note that we can also use `.sort_by` to specify which field we want our results sorted by.
@@ -501,10 +501,10 @@ Now, we'll try a slightly different sort of query.  We want to find all of the p
 Essentially we want to say "Find me all the people whose city is `city` AND whose skills array CONTAINS `desired_skill`", where `city` and `desired_skill` are the parameters to the `find_matching_skill` function in `app.py`.  Here's the code for that:
 
 ```python
-  people = Person.find(
-      (Person.skills << desired_skill) &
-      (Person.address.city == city)
-  ).all()
+people = Person.find(
+    (Person.skills << desired_skill) &
+    (Person.address.city == city)
+).all()
 ```
 
 The `<<` operator here is used to indicate "in" or "contains".
@@ -577,7 +577,7 @@ Each person has a `personal_statement` field, which is a free text string contai
 To search for people who have the value of the parameter `search_term` in their `personal_statement` field, we use the `%` operator:
 
 ```python
-  Person.find(Person.personal_statement % search_term).all()
+Person.find(Person.personal_statement % search_term).all()
 ```
 
 Let's find everyone who talks about "play" in their personal statement.
@@ -668,11 +668,11 @@ As well as retrieving information from Redis, we'll also want to update a Person
 The function `update_age` in `app.py` accepts two parameters: `id` and `new_age`.  Using these, we first retrieve the person's data from Redis and create a new object with it:
 
 ```python
-  try:
-      person = Person.get(id)
+try:
+    person = Person.get(id)
 
-  except NotFoundError:
-      return "Bad request", 400
+except NotFoundError:
+    return "Bad request", 400
 ```
 
 Assuming we find the person, let's update their age and save the data back to Redis:
@@ -695,7 +695,7 @@ The server responds with `ok`.
 If we know a person's ID, we can delete them from Redis without first having to load their data into a Person object. In the function `delete_person` in `app.py`, we call the `delete` class method on the Person class to do this:
 
 ```python
-  Person.delete(id)
+Person.delete(id)
 ```
 
 Let's delete Dan Harris, the person with ID `01FX8RMR8545RWW4DYCE5MSZA1`:
@@ -713,8 +713,8 @@ This is an example of how to run arbitrary Redis commands against instances of a
 The function `expire_by_id` in `app.py` handles this as follows.  It takes two parameters: `id` - the ID of a person to expire, and `seconds` - the number of seconds in the future to expire the person after.  This requires us to run the Redis `EXPIRE` command against the person's key.  To do this, we need to access the Redis connection from the `Person` model like so:
 
 ```python
-  person_to_expire = Person.get(id)
-  Person.db().expire(person_to_expire.key(), seconds)
+person_to_expire = Person.get(id)
+Person.db().expire(person_to_expire.key(), seconds)
 ```
 
 Let's set the person with ID `01FX8RMR82D091TC37B45RCWY3` to expire in 600 seconds:
