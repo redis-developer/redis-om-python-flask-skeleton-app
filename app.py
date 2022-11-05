@@ -45,7 +45,7 @@ def update_age(id, new_age):
     return "ok"
 
 # Delete a person by ID.
-@app.route("/person/<id>/delete", methods=["POST"])
+@app.route("/person/<id>", methods=["DELETE"])
 def delete_person(id):
     # Delete returns 1 if the person existed and was 
     # deleted, or 0 if they didn't exist.  For our 
