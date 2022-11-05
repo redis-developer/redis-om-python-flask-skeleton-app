@@ -32,20 +32,20 @@ def create_person():
         return "Bad request.", 400
 
 # Update a person's age.
-@app.route("/person/<id>/age/<int:new_age>", methods=["POST"])
+@app.route("/person/<id>/age/<int:new_age>", methods=["PUT"])
 def update_age(id, new_age):
     try:
         person = Person.get(id)
 
     except NotFoundError:
-        return "Bad request", 400
+        return "User not found", 404
     
     person.age = new_age
     person.save()
     return "ok"
 
 # Delete a person by ID.
-@app.route("/person/<id>/delete", methods=["POST"])
+@app.route("/person/<id>", methods=["DELETE"])
 def delete_person(id):
     # Delete returns 1 if the person existed and was 
     # deleted, or 0 if they didn't exist.  For our 
