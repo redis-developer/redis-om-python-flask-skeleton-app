@@ -672,7 +672,7 @@ The function `update_age` in `app.py` accepts two parameters: `id` and `new_age`
       person = Person.get(id)
 
   except NotFoundError:
-      return "Bad request", 400
+      return "User not found", 404
 ```
 
 Assuming we find the person, let's update their age and save the data back to Redis:
@@ -685,7 +685,7 @@ Assuming we find the person, let's update their age and save the data back to Re
 Let's change Kareem Khan's age from 27 to 28:
 
 ```bash
-curl --location --request POST 'http://127.0.0.1:5000/person/01FX8RMR7T60ANQTS4P9NKPKX8/age/28'
+curl --location --request PUT 'http://127.0.0.1:5000/person/01FX8RMR7T60ANQTS4P9NKPKX8/age/28'
 ```
 
 The server responds with `ok`.
@@ -701,7 +701,7 @@ If we know a person's ID, we can delete them from Redis without first having to 
 Let's delete Dan Harris, the person with ID `01FX8RMR8545RWW4DYCE5MSZA1`:
 
 ```bash
-curl --location --request POST 'http://127.0.0.1:5000/person/01FX8RMR8545RWW4DYCE5MSZA1/delete'
+curl --location --request DELETE 'http://127.0.0.1:5000/person/01FX8RMR8545RWW4DYCE5MSZA1'
 ```
 
 The server responds with an `ok` response regardless of whether the ID provided existed in Redis.
